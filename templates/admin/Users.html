@@ -1,0 +1,72 @@
+{% autoescape on %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Курсач - управление клиентами</title>
+</head>
+<body>
+    <table>
+        <tr>
+                <td>
+                    ID
+                </td>
+                <td>
+                    login
+                </td>
+                <td>
+                    EMail
+                </td>
+                <td>
+                </td>
+                <td>
+
+                </td>
+        </tr>
+        {% for str in users %}
+            <tr>
+                <td>
+                    {{ str.id }}
+                </td>
+                <td>
+                    {{ str.username }}
+                </td>
+                <td>
+                    {{ str.email }}
+                </td>
+                <td>
+                    <a href="user/change/{{ str.id }}">Изменить</a>
+                </td>
+                <td>
+                    <a href="user/delete/{{ str.id }}">Удалить</a>
+                </td>
+            </tr>
+        {% endfor %}
+        {% if alow_create %}
+            <tr>
+            <form>
+            <td>
+
+            </td>
+            <td>
+                <input type="text">
+            </td>
+            <td>
+                <input type="text">
+            </td>
+            <td>
+                <input type="text">
+            </td>
+            <td>
+                <input type="text">
+            </td>
+            <td>
+                <input type="submit" content="Создать">
+            </td>
+            </form>
+            </tr>
+        {% endif %}
+    </table>
+</body>
+</html>
+{% endautoescape %}

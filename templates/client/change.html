@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        {% if perm %}
+            <p>
+            ФИО
+            <input type="text" name="FIO" value="{{ client.FIO }}">
+            </p>
+            <p>
+            Адрес
+            <input type="text" name="addres" value="{{ client.addres }}">
+            </p>
+        {% endif %}
+        <p>
+            <label>Номер телефона</label><br>
+            <input type="number" name="phone" value="{{client.phone_number}}" />
+        </p>
+        <p>
+            <label>изменение баланса</label><br>
+            <input type="number" name="balance" value="0" />
+        </p>
+        <input type="submit" value="Сохранить" >
+    </form>
+</body>
+</html>

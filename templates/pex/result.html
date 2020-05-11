@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script>
+        function postToUrl(path, params, method) {
+            /*Да, это здесь точно нужно*/
+            method = method || "post"; // Устанавливаем метод отправки.
+
+            var form = document.createElement("form");
+            form.setAttribute("method", method);
+            form.setAttribute("action", path);
+            for(var key in params) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
+            }
+
+    document.body.appendChild(form);
+    form.submit();
+}
+    </script>
+    <title>Курсач - список лев</title>
+</head>
+<body>
+    <h1>{{ error }}</h1>
+    <ol>
+        {% for i in user_pex %}
+            <li>{{ i }}</li>
+        {% endfor %}
+    </ol>
+    <p>
+    <form action="" method="post">{% csrf_token %}
+        <p>
+            Добавить право:
+            <input type="text" name="pex">
+        </p>
+        <p>
+            <input type="hidden" value="{{ login }}" name="login">
+            <input type="hidden" value="add" name="type">
+            <input type="submit" value="Добавить">
+        </p>
+    </form>
+    </p>
+
+    <form action="" method="post">{% csrf_token %}
+        <p>
+            Удалить право:
+            <input type="text" name="pex">
+        </p>
+        <p>
+            <input type="hidden" value="{{ login }}" name="login">
+            <input type="hidden" value="remove" name="type">
+            <input type="submit" value="Удалить">
+        </p>
+    </form>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+
+            <p>
+            Название услуги
+            <input type="text" name="{{ args.0 }}" value="{{ service.service_name }}">
+            </p>
+            <p>
+            Стоимость
+            <input type="number" name="{{ args.1 }}" value="{{ service.cost }}">
+            </p>
+            <p>
+                Ед измерения
+                <input type="text" name="{{ args.2 }}" value="{{ service.tarif_type }}">
+            </p>
+        <input type="submit" value="Сохранить" >
+    </form>
+</body>
+</html>

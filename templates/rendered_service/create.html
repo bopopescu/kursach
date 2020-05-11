@@ -1,0 +1,38 @@
+{% extends "index.html" %}
+{% block title %}
+    Курсач - создать услугу
+{% endblock %}
+{% block client_show %}show{% endblock %}
+{% block rendered_service_create %}active{% endblock %}
+{% block client_active %}active{% endblock %}
+{% block main_title %}Создать услугу{% endblock %}
+{% block main_board %}
+    <form action="" method="post">
+            {% csrf_token %}
+            <br>
+            <label>
+                Клиент
+                <select name="id_client">
+                    {% for i in client %}
+                    <option value="{{ i.id }}">{{ i.FIO }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>
+                Услуга
+                <select name="id_service">
+                    {% for i in service %}
+                    <option value="{{ i.id }}">{{ i.service_name }}</option>{{ i.id }}
+                    {% endfor %}
+                </select>
+            </label>
+            <br>
+            <label>
+                Количество
+                <input type="number" name="count">
+            </label>
+            <label>
+                <input type="submit" value="Coздaть">
+            </label>
+        </form>
+{% endblock %}

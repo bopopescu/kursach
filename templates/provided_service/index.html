@@ -1,0 +1,169 @@
+
+{% extends "index.html" %}
+{% block main_title %}
+    Поставленные услуги
+{% endblock %}
+{% block main_board %}
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                      {% for i in table_head %}
+                          <th>{{ i }}</th>
+                      {% endfor %}
+                      </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        {% for i in table_head %}
+                          <th>{{i}}</th>
+                        {% endfor %}
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for str in provided_service %}
+            <tr>
+                <td>
+                    {{ str.id }}
+                </td>
+                <td>
+                    {{ str.date }}
+                </td>
+                <td>
+                    <a href="/provider/#id{{ str.provider.id }}"> {{ str.provider.provider_name }}</a>
+                </td>
+                <td>
+                    <a href="/service/#id{{ str.service.id }}" >{{ str.service.service_name }}</a>
+                </td>
+                <td>
+                    {{ str.sum }}
+                </td>
+                <td>
+                    <a href="change/{{ str.id }}">Изменить</a>
+                </td>
+                {% if perm %}
+                <td>
+                    <a href="delete/{{ str.id }}">Удалить</a>
+                </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% if perm %}
+<form action="create" method="post">
+    {% csrf_token %}
+    <tr>
+        <td>Поставщик</td>
+        <td>Услуга</td>
+        <td></td>
+    </tr>
+        <tr>
+            <td>
+                <input type="text" form="create" name="provider">
+            </td>
+            <td>
+                <input type="text" form="create" name="addres">
+            </td>
+            <td>
+                <input type="text" form="create" name="phone">
+            </td>
+           <td>
+                <input type="submit" form="create" content="Создать">
+            </td>
+            </tr>
+</form>
+{% endif %}
+{% endblock %}
+{% block provider_show %}show{% endblock %}
+{% block provided_service %}active{% endblock %}
+{% block provider_active %}active{% endblock %}
+{% comment %}
+{% autoescape on %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Курсач - управление клиентами</title>
+</head>
+<body>
+    {% if perm %}
+        <form id="create" action="create" method="POST">{% csrf_token %}</form>
+    {% endif %}
+    <table>
+        <tr>
+                <td>
+                    ID
+                </td>
+                <td>
+                    Дата
+                </td>
+                <td>
+                    Поставщик
+                </td>
+                <td>
+                    Услуга
+                </td>
+                <td>
+                    Сумма
+                </td>
+                <td>
+                </td>
+        </tr>
+        {% for str in provided_service %}
+            <tr>
+                <td>
+                    {{ str.id }}
+                </td>
+                <td>
+                    {{ str.date }}
+                </td>
+                <td>
+                    <a href="/provider/#id{{ str.provider.id }}"> {{ str.provider.provider_name }}</a>
+                </td>
+                <td>
+                    <a href="/service/#id{{ str.service.id }}" >{{ str.service.service_name }}</a>
+                </td>
+                <td>
+                    {{ str.sum }}
+                </td>
+                <td>
+                    <a href="change/{{ str.id }}">Изменить</a>
+                </td>
+                {% if perm %}
+                <td>
+                    <a href="delete/{{ str.id }}">Удалить</a>
+                </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        {% if False %}
+            <tr>
+            <td>
+
+            </td>
+            <td>
+                <input type="text" form="create" name="provider">
+            </td>
+            <td>
+                <input type="text" form="create" name="addres">
+            </td>
+            <td>
+                <input type="text" form="create" name="phone">
+            </td>
+            <td>
+
+            </td>
+            <td>
+                <input type="submit" form="create" content="Создать">
+            </td>
+            </tr>
+        {% endif %}
+    </table>
+</body>
+</html>
+    {% endblock %}
+{% endcomment %}

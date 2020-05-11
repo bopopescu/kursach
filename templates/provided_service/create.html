@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Курсач - созданеи ыомвалиоамыиловамтоимваолитпв</title>
+    <style>
+        .form{
+            height: 600px;
+            width: 800px;
+            color: grey;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="form">
+        <form action="" method="post">
+            {% csrf_token %}
+            <br>
+            <label>
+                Поставщик
+                <select name="provider">
+                    {% for i in provider %}
+                    <option value="{{ i.id }}">{{ i.provider_name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>
+                Услуга
+                <select name="service">
+                    {% for i in service %}
+                    <option value="{{ i.id }}">{{ i.service_name }}</option>{{ i.id }}
+                    {% endfor %}
+                </select>
+            </label>
+            <br>
+            <label>
+                Количество
+                <input type="number" name="count">
+            </label>
+            <label>
+                <input type="submit" value="Coздaть">
+            </label>
+        </form>
+    </div>
+</body>
+</html>

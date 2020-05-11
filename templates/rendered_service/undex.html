@@ -1,0 +1,84 @@
+{% autoescape on %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Курсач - управление клиентами</title>
+</head>
+<body>
+    {% if perm %}
+        <form id="create" action="create" method="POST">{% csrf_token %}</form>
+    {% endif %}
+    <table>
+        <tr>
+                <td>
+                    ID
+                </td>
+                <td>
+                    Дата
+                </td>
+                <td>
+                    Клиент
+                </td>
+                <td>
+                    Услуга
+                </td>
+                <td>
+                    Сумма
+                </td>
+                <td>
+                </td>
+        </tr>
+        {% for str in rendered_service %}
+            <tr>
+                <td>
+                    {{ str.id }}
+                </td>
+                <td>
+                    {{ str.date }}
+                </td>
+                <td>
+                    <a href="/client/#id{{ str.id_client.id }}"> {{ str.id_client.FIO }}</a>
+                </td>
+                <td>
+                    <a href="/service/#id{{ str.id_service.id }}" >{{ str.id_service.service_name }}</a>
+                </td>
+                <td>
+                    {{ str.sum }}
+                </td>
+                <td>
+                    <a href="change/{{ str.id }}">Изменить</a>
+                </td>
+                {% if perm %}
+                <td>
+                    <a href="delete/{{ str.id }}">Удалить</a>
+                </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        {% if perm %}
+            <tr>
+            <td>
+
+            </td>
+            <td>
+                <input type="text" form="create" name="FIO">
+            </td>
+            <td>
+                <input type="text" form="create" name="addres">
+            </td>
+            <td>
+                <input type="text" form="create" name="phone">
+            </td>
+            <td>
+
+            </td>
+            <td>
+                <input type="submit" form="create" content="Создать">
+            </td>
+            </tr>
+        {% endif %}
+    </table>
+</body>
+</html>
+{% endautoescape %}

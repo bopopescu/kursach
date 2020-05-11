@@ -1,0 +1,70 @@
+{% autoescape on %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Курсач - управление клиентами</title>
+</head>
+<body>
+
+<form id="create" action="create" method="POST">{% csrf_token %}</form>
+
+    <table>
+        <tr>
+                <td>
+                    ID
+                </td>
+                <td>
+                    Название организации
+                </td>
+                <td>
+                    Поставляемая услуга
+                </td>
+                <td>
+                </td>
+        </tr>
+        {% for str in provider %}
+            <tr>
+                <td>
+                    {{ str.id }}
+                </td>
+                <td>
+                    {{ str.provider_name }}
+                </td>
+                <td>
+                    <a href="/provide_service/{{ str.provide_service.id }}">{{ str.provide_service.service_name }}</a>
+
+                <td>
+                    <a href="change/{{ str.id }}">Изменить</a>
+                </td>
+
+                <td>
+                    <a href="delete/{{ str.id }}">Удалить</a>
+                </td>
+
+            </tr>
+        {% endfor %}
+
+            <tr>
+            <td>
+
+            </td>
+            <td>
+                <input type="text" form="create" name="provider_name">
+            </td>
+            <td>
+                <!--input type="text" form="create" name="service"-->
+                <select form="create" name="service">
+                    {% for i in service %}
+                    <option value="{{ i.id }}">{{ i.service_name }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <input type="submit" form="create" content="Создать">
+            </td>
+            </tr>
+    </table>
+</body>
+</html>
+{% endautoescape %}

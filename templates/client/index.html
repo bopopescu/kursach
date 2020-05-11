@@ -1,0 +1,87 @@
+{% extends "index.html" %}
+{% block main_title %}
+    Список клиентов
+{% endblock %}
+{% block main_board %}
+    <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                      <tr>
+                      {% for i in table_head %}
+                          <th>{{ i }}</th>
+                      {% endfor %}
+                      </tr>
+                    </thead>
+                    <tfoot>
+                      <tr>
+                        {% for i in table_head %}
+                          <th>{{i}}</th>
+                        {% endfor %}
+                      </tr>
+                    </tfoot>
+                  <tbody>
+                    {% for i in client %}
+                        <tr>
+
+                          <th>{{ i.id }}</th>
+                        <th>{{ i.FIO }}</th>
+                        <th>{{ i.addres }}</th>
+                        <th>{{ i.phone_number }}</th>
+                        <th>{{ i.balance }}</th>
+                        <th>
+                    <a href="change/{{ i.id }}">Изменить</a>
+                </th>
+
+                        <th>
+                            {% if perm %}
+                            <a href="delete/{{ i.id }}">Удалить</a>
+                            {% endif %}
+                        </th>
+
+                        </tr>
+                {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+    <center>
+    Создать клиента
+    <form action="/client/create" METHOD="post">
+        {% if perm %}
+            <table>
+            <tr>
+                <td>
+                    ФИО
+                </td>
+                <td>
+                    Адрес
+                </td>
+                <td>
+                    Номер телефона
+                </td>
+                <td>
+                </td>
+        </tr>
+            <tr>
+            <td>
+                <input type="text" name="FIO">
+            </td>
+            <td>
+                <input type="text" name="addres">
+            </td>
+            <td>
+                <input type="text" name="phone">
+            </td>
+            <td>
+                <input type="submit" content="Создать">
+            </td>
+            </tr>
+            </table>
+        {% endif %}
+    </form>
+    </center>
+{% endblock %}
+{% block client_show %}show{% endblock %}
+{% block client %}active{% endblock %}
+{% block client_active %}active{% endblock %}
