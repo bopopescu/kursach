@@ -1,3 +1,101 @@
+{% extends "index.html" %}
+{% block main_title %}
+    Поставщики
+{% endblock %}
+{% block main_board %}
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+        <tr>
+                <td>
+                    ID
+                </td>
+                <td>
+                    Название организации
+                </td>
+                <td>
+                    Поставляемая услуга
+                </td>
+                <td>
+                </td>
+                <td>
+
+                </td>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+                <td>
+                    ID
+                </td>
+                <td>
+                    Название организации
+                </td>
+                <td>
+                    Поставляемая услуга
+                </td>
+                <td>
+                </td>
+                <td>
+
+                </td>
+        </tr>
+        </tfoot>
+        {% for str in provider %}
+            <tr>
+                <td>
+                    {{ str.id }}
+                </td>
+                <td>
+                    {{ str.provider_name }}
+                </td>
+                <td>
+                    <a href="/service/?id={{ str.provide_service.id }}">{{ str.provide_service.service_name }}</a>
+
+                <td>
+                    <a href="change/{{ str.id }}">Изменить</a>
+                </td>
+
+                <td>
+                    <a href="delete/{{ str.id }}">Удалить</a>
+                </td>
+
+            </tr>
+        {% endfor %}
+    </table>
+    <center>
+    <form id="create" action="create" method="POST">{% csrf_token %}
+        <table>
+            <tr>
+                <th>
+                     Название организации
+                </th>
+                <th>
+                    Поставляемая услуга
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="text" name="provider_name">
+                </th>
+                <th>
+                    <select form="create" name="service">
+                    {% for i in service %}
+                    <option value="{{ i.id }}">{{ i.service_name }}</option>
+                    {% endfor %}
+                </select>
+                </th>
+            <th>
+                <input type="submit" value="Создать">
+            </th>
+            </tr>
+        </table>
+    </form>
+    </center>
+{% endblock %}
+{% block provider_show %}show{% endblock %}
+{% block provider_active %}active{% endblock %}
+{% block provider %}active{% endblock %}
+{% comment %}
 {% autoescape on %}
 <!DOCTYPE html>
 <html lang="en">
@@ -68,3 +166,4 @@
 </body>
 </html>
 {% endautoescape %}
+{% endcomment %}

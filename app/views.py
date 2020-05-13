@@ -147,7 +147,11 @@ def provider(request):
         return HttpResponseNotFound('404')  # TODO
     provider = models.provider.objects.all()
     service = models.service.objects.all()
-    context = {'provider': provider, 'service': service}
+    limited_client = request.user.has_perm('app.limited-client')
+    full_client = request.user.has_perm('app.full-client')
+    full_provider = request.user.has_perm('app.full-provider')
+    context = {'provider': provider, 'service': service, "limited_client":limited_client, 'full_client':full_client,
+               'full_provider':full_provider}
     return render(request, 'provider/provider.html', context)
 
 
