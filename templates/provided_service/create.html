@@ -1,20 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Курсач - созданеи ыомвалиоамыиловамтоимваолитпв</title>
-    <style>
-        .form{
-            height: 600px;
-            width: 800px;
-            color: grey;
-
-        }
-    </style>
-</head>
-<body>
-    <div class="form">
-        <form action="" method="post">
+{% extends "index.html" %}
+{% block title %}
+    Курсач - создать поставку
+{% endblock %}
+{% block main_title %}
+    Создать поставку
+{% endblock %}
+{% block main_board %}
+     <form action="" method="post">
             {% csrf_token %}
             <br>
             <label>
@@ -42,6 +34,7 @@
                 <input type="submit" value="Coздaть">
             </label>
         </form>
-    </div>
-</body>
-</html>
+{% endblock %}
+{% block provider_active %}active{% endblock %}
+{% block provided_service_create %}active{% endblock %}
+{% block provider_show %}show{% endblock %}

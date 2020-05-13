@@ -354,7 +354,7 @@ def provided_service(request):
     return render(request, 'provided_service/index.html', {'provider':provider,
                                                            'service':service,
                                                            'provided_service':provided_service,
-                                                           'pern':perm,
+                                                           'perl':perm,
                                                            'limited_client':limited_client,
                                                            'full_provider':full_provider,
                                                            'full_client': full_client,
@@ -385,9 +385,17 @@ def provided_service_create(request):
         except ValueError:
             return HttpResponse("Неправильный ввод")
     else:
+        limited_client = request.user.has_perm('app.limited-client')
+        full_client = request.user.has_perm('app.full-client')
+        full_provider = request.user.has_perm('app.full-provider')
         service = models.service.objects.all()
         provider = models.provider.objects.all()
-        return render(request, 'provided_service/create.html', {'service': service, 'provider': provider})
+        return render(request, 'provided_service/create.html', {'service': service,
+                                                                'provider': provider,
+                                                                'limited_client': limited_client,
+                                                                'full_provider': full_provider,
+                                                                'full_client': full_client,
+                                                                })
 
 def check_permission_or(request, perms):
     perm = [request.user.has_perm(x) for x in perms]
