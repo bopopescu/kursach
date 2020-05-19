@@ -217,8 +217,18 @@ def service(request):
     if not (check_permission_or(request, ['app.read-service', 'full-client'])):
         return HttpResponseNotFound('404')
     sevices = models.service.objects.all()
+    id = request.GET.get('id')
+    if id != None:
+        sevices = sevices.filter(id=id)
+    limited_client = request.user.has_perm('app.limited-client')
+    full_client = request.user.has_perm('app.full-client')
+    full_provider = request.user.has_perm('app.full-provider')
     return render(request, 'service/service.html',
-                  {'services': sevices, 'perm': request.user.has_perm('app.full-service')})
+                  {'services': sevices,
+                   'perm': request.user.has_perm('app.full-service'),
+                   'limited_client':limited_client,
+                   'full_provider':full_provider,
+                   'full_client':full_client})
 
 
 @login_required
@@ -421,6 +431,10 @@ def pemission_check(request):
 @login_required
 def register_new_user(request):
     if request.user.is_superuser:
+        limited_client = request.user.has_perm('app.limited-client')
+        full_client = request.user.has_perm('app.full-client')
+        full_provider = request.user.has_perm('app.full-provider')
+        context = {'full_provider':full_provider, 'full_client':full_client, 'limited_client':limited_client}
         if type(request.POST.get('login')) == type("str"):
 
             succes = True
@@ -430,12 +444,12 @@ def register_new_user(request):
                                                 password=request.POST.get('password'))
                 user.save()
             except IntegrityError:
-                return render(request, 'registration_result.html', {'result': 'Пользователь уже существует'})
+                return render(request, 'registration_result.html', context.pop({'result': 'Пользователь уже существует'}))
             except ValueError:
                 return render(request, 'registration_result.html', {'result': 'Некорректый ввод'})
             return render(request, 'registration_result.html', {'result': 'Пользователь успешно создан'})
         else:
-            return render(request, 'registration.html')
+            return render(request, 'registration.html', context)
     else:
         return HttpResponseNotFound("Страницы не существует(((")  # TODO
 
@@ -449,7 +463,11 @@ def add_permission_to_user(request):
     if not request.user.is_superuser:
         return HttpResponseNotFound("Страницы не существует(((")  # TODO
     if request.method == 'GET':
-        return render(request, 'pex/get_template.html')
+        limited_client = request.user.has_perm('app.limited-client')
+        full_client = request.user.has_perm('app.full-client')
+        full_provider = request.user.has_perm('app.full-provider')
+        context = {'full_provider': full_provider, 'full_client': full_client, 'limited_client': limited_client}
+        return render(request, 'pex/get_template.html', context)
     else:
         login = request.POST.get('login')
         pex = request.POST.get('pex')
@@ -487,7 +505,13 @@ def user(request):
     if not request.user.is_superuser:
         return HttpResponseNotFound("Страницы не существует(((")  # TODO
     users = User.objects.all()
-    return render(request, 'admin/Users.html', {'users': users})
+    limited_client = request.user.has_perm('app.limited-client')
+    full_client = request.user.has_perm('app.full-client')
+    full_provider = request.user.has_perm('app.full-provider')
+    return render(request, 'admin/Users.html', {'users': users,
+                                                'limited_client':limited_client,
+                                                'full_client':full_client,
+                                                'full_provider':full_provider})
 
 
 @login_required
@@ -515,6 +539,12 @@ def change_user(request, id):
             user.save()
             return HttpResponseRedirect("/")
         else:
-            return render(request, "admin/change.html", {"user": user})
+            limited_client = request.user.has_perm('app.limited-client')
+            full_client = request.user.has_perm('app.full-client')
+            full_provider = request.user.has_perm('app.full-provider')
+            return render(request, "admin/change.html", {"user": user,
+                                                'limited_client':limited_client,
+                                                'full_client':full_client,
+                                                'full_provider':full_provider})
     except User.DoesNotExist:
         return HttpResponseNotFound("<h2>User not found</h2>")

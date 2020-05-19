@@ -1,3 +1,111 @@
+{% extends "index.html" %}
+{% block main_title %}
+    Услуги
+{% endblock %}
+{% block main_board %}
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <thead>
+        <tr>
+                <td>
+                    ID
+                </td>
+                <td>
+                    Название услуги
+                </td>
+                <td>
+                    Стоимость
+                </td>
+                <td>
+                    Ед. измерения
+                </td>
+            <td>
+            </td>
+            <td>
+
+            </td>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+                <td>
+                    ID
+                </td>
+                <td>
+                    Название услуги
+                </td>
+                <td>
+                    Стоимость
+                </td>
+                <td>
+                    Ед. измерения
+                </td>
+            <td>
+            </td>
+            <td>
+
+            </td>
+        </tr>
+    </tfoot>
+    <tbody>
+        {% for str in services %}
+            <tr>
+                <td>
+                    {{ str.id }}
+                </td>
+                <td>
+                    {{ str.service_name }}
+                </td>
+                <td>
+                    {{ str.cost }}
+                </td>
+                <td>
+                    {{ str.tarif_type }}
+                </td>
+                {% if perm %}
+                <td>
+                    <a href="change/{{ str.id }}">Изменить</a>
+                </td>
+
+                <td>
+                    <a href="delete/{{ str.id }}">Удалить</a>
+                </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+
+        {% if perm %}
+            <center>
+            <form id="create" action="create" method="POST">{% csrf_token %}
+            <table>
+                <tr>
+            <td>
+
+            </td>
+            <td>
+                <input type="text" form="create" name="name">
+            </td>
+            <td>
+                <input type="text" form="create" name="cost">
+            </td>
+                <td>
+                    <input type="text" form="create" name="tarif_type">
+                </td>
+            <td>
+                <input type="submit" form="create" content="Создать">
+            </td>
+            </tr>
+            </table>
+            </form>
+            </center>
+        {% endif %}
+{% endblock %}
+{% block service %}active{% endblock %}
+{% block admin_user %}active{% endblock %}
+
+{% comment %}
 {% autoescape on %}
 <!DOCTYPE html>
 <html lang="en">
@@ -74,3 +182,4 @@
 </body>
 </html>
 {% endautoescape %}
+{% endcomment %}

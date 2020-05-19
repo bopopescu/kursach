@@ -1,3 +1,27 @@
+{% extends "index.html" %}
+{% block main_title %}
+    change user
+{% endblock %}
+{% block main_board %}
+    <form method="POST">
+        {% csrf_token %}
+        <p>
+            <label>Введите имя</label><br>
+            <input type="text" name="email" value="{{user.email}}" />
+        </p>
+        <p>
+            <label>Введите пароль</label><br>
+            <input type="password" name="password" value="" />
+        </p>
+        <input type="submit" value="Сохранить" >
+    </form>
+{% endblock %}
+{% block admin_user_show %}show{% endblock %}
+{% block admin_user %}active{% endblock %}
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +36,7 @@
             <input type="text" name="email" value="{{user.email}}" />
         </p>
         <p>
-            <label>Введите возраст</label><br>
+            <label>Введите пароль</label><br>
             <input type="password" name="password" value="" />
         </p>
         <input type="submit" value="Сохранить" >

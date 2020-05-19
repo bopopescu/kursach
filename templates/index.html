@@ -107,7 +107,7 @@
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
+      <li class="nav-item {% block admin_user_active %} {% endblock %}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-folder"></i>
           <span>User</span>
@@ -116,7 +116,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Login Screens:</h6>
             <a class="collapse-item {% block admin_user %} {% endblock %}" href="/admin/user">Users</a>
-            <a class="collapse-item {% block admin_registrations %} {% endblock %}" href="admin/registrations">Register</a>
+            <a class="collapse-item {% block admin_registrations %} {% endblock %}" href="/admin/registrations">Register</a>
             <a class="collapse-item {% block admin_add_pex %} {% endblock %}" href="/admin/add_pex">permission users</a>
           </div>
         </div>
@@ -124,7 +124,7 @@
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="/TODO">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>DROP DATABASE</span></a>
       </li>

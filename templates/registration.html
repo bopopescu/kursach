@@ -1,3 +1,35 @@
+{% extends "index.html"%}
+{% block main_title %}
+    Registrations new user
+{% endblock %}
+{% block main_board %}
+    <form action="" method="POST">{% csrf_token %}
+        <p>
+            Login:
+        <input type="text" name="login">
+        </p>
+        <p>
+            EMail:
+            <input type="text" name="email">
+        </p>
+        <p>
+            password:
+            <input type="text" name="password">
+        </p>
+        <p>
+            <input type="submit">
+        </p>
+    </form>
+{% endblock %}
+{% block admin_registrations %}active{% endblock %}
+{% block admin_user_show %}show{% endblock %}
+{% block admin_user_active %}active{% endblock %}
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
